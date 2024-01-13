@@ -1,0 +1,37 @@
+<!-- views/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keyword Search</title>
+</head>
+<body>
+  <form id="keywordForm">
+    <label for="keyword">Search for Keyword:</label>
+    <input type="text" id="keyword" name="keyword" required>
+    <button type="submit">Search</button>
+  </form>
+
+  <script>
+    document.getElementById("keywordForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      const keyword = document.getElementById("keyword").value;
+
+      fetch("/keywords/search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ keyword }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        // Handle the response as needed
+      })
+      .catch(error => console.error("Error:", error));
+    });
+  </script>
+</body>
+</html>
